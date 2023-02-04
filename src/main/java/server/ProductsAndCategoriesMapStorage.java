@@ -24,7 +24,6 @@ public class ProductsAndCategoriesMapStorage { // один обьект, дол�
     public List<Category> createUniqueCategories() {
         List<Category> categories = new ArrayList<>();
         String otherCategory = "другое";
-        // основные операции
         List<String> categoryNameList = new ArrayList<>(productsAndCategory.values());
         List<String> listOfUniqueCategoryNames = categoryNameList.stream().distinct().collect(Collectors.toList());
         for (String uniqueCategoryName : listOfUniqueCategoryNames) {
