@@ -26,10 +26,8 @@ public class Server {  // один обьект
                     System.out.println("Новый клиент подключился");
                     String clientJSONRequest = in.readLine();
                     Purchase newPurchase = Purchase.createFromJSON(clientJSONRequest);
-                    String response = financeManager.setCategoryAndAddPurchase(newPurchase)
-                            .calculateEachCategorySum()
-                            .findCategoryWithMaxSum()
-                            .convertCategoryWithMaxSumToJSON();
+                    financeManager.setCategoryAndAddPurchase(newPurchase).findMaxSumCategoriesForDifferentPeriods();
+                    String response = financeManager.convertCategoriesWithMaxSumToJSON();
                     financeManager.savePurchasesListToBin();
                     out.println(response);
                 }

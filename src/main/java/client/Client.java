@@ -14,9 +14,9 @@ public class Client {
         try (Socket socket = new Socket(ip, port);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-              out.println("{\"title\": \"булка\", \"date\": \"2022.02.08\", \"sum\": 200}");
-            // out.println("{\"title\": \"мыло\", \"date\": \"2022.02.08\", \"sum\": 800}");
-            // out.println("{\"title\": \"орехи\", \"date\": \"2022.02.08\", \"sum\": 1100}");
+              out.println("{\"title\": \"булка\", \"date\": \"2023.02.05\", \"sum\": 200}");
+            //  out.println("{\"title\": \"мыло\", \"date\": \"2023.02.04\", \"sum\": 800}");
+            // out.println("{\"title\": \"орехи\", \"date\": \"2023.02.05\", \"sum\": 1100}");
             // out.println("{\"title\": \"стул\", \"date\": \"2022.02.08\", \"sum\": 500}");
             out.println();
             System.out.println(in.readLine());
