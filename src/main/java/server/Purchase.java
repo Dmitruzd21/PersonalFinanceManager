@@ -4,17 +4,38 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class Purchase implements Serializable { // много обьектов создается в сервере в цикле
     private String title;
     private String date;
     private int sum;
     private String category;
+    private LocalDate parsedDate;
 
    public Purchase(String title, String date, int sum) {
         this.title = title;
         this.date = date;
         this.sum = sum;
+    }
+
+    public int getYear() {
+       this.date = date.replace('.', '-');
+       this.parsedDate = LocalDate.parse(date);
+       return this.parsedDate.getYear();
+    }
+
+    public Month getMonth() {
+        this.date = date.replace('.', '-');
+        this.parsedDate = LocalDate.parse(date);
+        return this.parsedDate.getMonth();
+    }
+
+    public int getDay() {
+        this.date = date.replace('.', '-');
+        this.parsedDate = LocalDate.parse(date);
+        return this.parsedDate.getDayOfMonth();
     }
 
     public String getCategory() {

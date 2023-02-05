@@ -22,6 +22,10 @@ public class Category {  // много объектов
         return sum;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String toString() {
         return "Категория: " + category + ", " + sum;
     }
