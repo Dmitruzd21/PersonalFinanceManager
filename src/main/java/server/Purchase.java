@@ -3,7 +3,9 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Purchase { // много обьектов создается в сервере в цикле
+import java.io.Serializable;
+
+public class Purchase implements Serializable { // много обьектов создается в сервере в цикле
     private String title;
     private String date;
     private int sum;

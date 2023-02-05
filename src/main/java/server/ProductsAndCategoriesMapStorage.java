@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class ProductsAndCategoriesMapStorage { // один обьект, должен быть готов перед приемом покупок
     private Map<String, String> productsAndCategory;
-    TsvMapConverter tsvMapConverter = new TsvMapConverter();
-    String tsvFile = "categories.tsv";
-    String otherCategory = "другое";
+    private TsvMapConverter tsvMapConverter = new TsvMapConverter();
+    private String tsvFile = "categories.tsv";
+    private String otherCategory = "другое";
 
     public ProductsAndCategoriesMapStorage() {
         this.productsAndCategory = tsvToMap();

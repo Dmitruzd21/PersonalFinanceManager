@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class CategorySerializer {
-    Category maxCategory;
+    private Category maxCategory;
 
     public CategorySerializer(Category maxCategory) {
         this.maxCategory = maxCategory;
