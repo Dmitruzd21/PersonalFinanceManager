@@ -24,7 +24,6 @@ public class FinanceManager { // один объект
     public FinanceManager calculateEachCategorySum() { // предвариетльно покупке должна быть присвоена категория
         categoryList.stream().forEach(
                 categoryItem -> {
-                    System.out.println(categoryItem.getCategoryName());
                     int categorySum = 0;
                     for (Purchase purchase : purchases) {
                         if (purchase.getCategory().equals(categoryItem.getCategoryName())) {
@@ -46,5 +45,17 @@ public class FinanceManager { // один объект
         }
         categoryWithMaxSum = categoryWithMaxAmount;
         return this;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public Category getCategoryWithMaxSum() {
+        return categoryWithMaxSum;
+    }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
     }
 }
