@@ -38,7 +38,21 @@ public class Purchase { // много обьектов создается в с�
         return purchase;
     }
 
+    @Override
     public String toString () {
        return "Покупка: " + title + ", " + date + ", " + sum+ ", " + category;
-    }
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+       if (this == obj)
+           return true;
+       if (obj == null)
+           return false;
+       if (getClass() != obj.getClass())
+           return false;
+       Purchase anotherPurchase = (Purchase) obj;
+       return  (this.title.equals(anotherPurchase.title)
+               && this.category.equals(anotherPurchase.category));
+   }
 }
