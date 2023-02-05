@@ -1,5 +1,6 @@
 package server;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class FinanceManager { // один объект
     private List<Category> categoryList = mapStorage.createUniqueCategories();
     private Category categoryWithMaxSum;
     private List<Purchase> purchases = new ArrayList<>();
+    private static String binFile = "data.bin";
 
     public String convertCategoryWithMaxSumToJSON() {
         CategorySerializer categorySerializer = new CategorySerializer(categoryWithMaxSum);
@@ -45,6 +47,26 @@ public class FinanceManager { // один объект
         }
         categoryWithMaxSum = categoryWithMaxAmount;
         return this;
+    }
+
+    public void loadPurchasesListFromBin() {
+        List<Purchase> purchaseList = null;
+        try (FileInputStream fis = new FileInputStream(binFile);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            purchaseList = (List<Purchase>) ois.readObject();
+             this.purchases = purchaseList;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void savePurchasesListToBin() {
+        try (FileOutputStream fos = new FileOutputStream(binFile);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(purchases);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
     public List<Category> getCategoryList() {
