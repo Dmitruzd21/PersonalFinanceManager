@@ -45,9 +45,9 @@ public class FinanceManager { // один объект
     }
 
     public void findMaxSumCategoriesForDifferentPeriods() {
-        List<Purchase> purchasesForCurrentDay = getPurchasesForCurrentYear();
+        List<Purchase> purchasesForCurrentDay = getPurchasesForCurrentDay();
         List<Purchase> purchasesForCurrentMonth = getPurchasesForCurrentMonth();
-        List<Purchase> purchasesForCurrentYear = getPurchasesForCurrentDay();
+        List<Purchase> purchasesForCurrentYear = getPurchasesForCurrentYear();
         maxCategory = calculateEachCategorySum(purchases, categoryList)
                 .findCategoryWithMaxSum(categoryList);
         maxYearCategory = calculateEachCategorySum(purchasesForCurrentYear, categoryListForYear)
@@ -114,8 +114,7 @@ public class FinanceManager { // один объект
         return purchases.stream().
                 filter(purchase ->
                         purchase.getYear() == currentDate.getYear()
-                                && purchase.getMonth().equals(currentDate.getMonth())
-                )
+                                && purchase.getMonth().equals(currentDate.getMonth()))
                 .collect(Collectors.toList());
     }
 

@@ -6,6 +6,8 @@ import server.FinanceManager;
 import server.ProductsAndCategoriesMapStorage;
 import server.Purchase;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
-public class FinanceManagerClass {
+public class FinanceManagerTest {
 
     FinanceManager financeManager;
 
@@ -35,6 +37,9 @@ public class FinanceManagerClass {
     int expectedSumOfHouseholdCategory = purchaseSoap.getSum();
     int expectedSumOfFinanceCategory = purchaseShares.getSum();
     int expectedSumOfOtherCategory = purchaseNuts.getSum();
+
+    LocalDate now = LocalDate.now();
+    String currentDateStr = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
 
     public void addPurchasesOfAllCategories() {
         financeManager.setCategoryAndAddPurchase(purchaseBun);
@@ -127,7 +132,67 @@ public class FinanceManagerClass {
         Purchase newPurchase = Purchase.createFromJSON(clientJSONRequest);
         financeManager.setCategoryAndAddPurchase(newPurchase).findMaxSumCategoriesForDifferentPeriods();
         String actualResponse = financeManager.convertCategoriesWithMaxSumToJSON();
-        String expectedResponse = "{\"maxCategory\":{\"category\":\"еда\",\"sum\":200},\"maxYearCategory\":{\"category\":\"еда\",\"sum\":200},\"maxMonthCategory\":{\"category\":\"еда\",\"sum\":200},\"maxDayCategory\":{\"category\":\"еда\",\"sum\":200}}";
+        String expectedResponse = "{\"maxCategory\":{\"category\":\"еда\",\"sum\":200},\"maxYearCategory\":{\"category\":\"еда\",\"sum\":200},\"maxMonthCategory\":{\"category\":\"еда\",\"sum\":200},\"maxDayCategory\":{\"category\":\"Не было покупок за текущий день\",\"sum\":0}}";
         Assertions.assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void shouldNotGetPurchasesForCurrentDay() {
+        addPurchasesOfAllCategories();
+        List<Purchase> purchaseList = financeManager.getPurchasesForCurrentDay();
+        Assertions.assertTrue(purchaseList.isEmpty());
+    }
+
+    @Test
+    public void shouldNotGetPurchasesForCurrentMonth() {
+        addPurchasesOfAllCategories();
+        List<Purchase> purchaseList = financeManager.getPurchasesForCurrentMonth();
+        Assertions.assertTrue(purchaseList.isEmpty());
+    }
+
+    @Test
+    public void shouldNotGetPurchasesForCurrentYear() {
+        addPurchasesOfAllCategories();
+        List<Purchase> purchaseList = financeManager.getPurchasesForCurrentYear();
+        Assertions.assertTrue(purchaseList.isEmpty());
+    }
+
+    @Test
+    public void shouldGetPurchasesForCurrentDay() {
+        Purchase purchaseBun1 = new Purchase("булка", currentDateStr, 200);
+        Purchase purchaseBun2 = new Purchase("булка", "2022.02.08", 200);
+        Purchase purchaseBun3 = new Purchase("булка", "2019.01.05", 200);
+        financeManager.setCategoryAndAddPurchase(purchaseBun1);
+        financeManager.setCategoryAndAddPurchase(purchaseBun2);
+        financeManager.setCategoryAndAddPurchase(purchaseBun3);
+        List<Purchase> actualPurchaseList = financeManager.getPurchasesForCurrentDay();
+        List<Purchase> expectedPurchaseList = Arrays.asList(purchaseBun1);
+        assertThat("Содержимое списков разное", expectedPurchaseList, is(actualPurchaseList));
+    }
+
+    @Test
+    public void shouldGetPurchasesForCurrentMonth() {
+        Purchase purchaseBun1 = new Purchase("булка", currentDateStr, 200);
+        Purchase purchaseBun2 = new Purchase("булка", "2022.02.08", 200);
+        Purchase purchaseBun3 = new Purchase("булка", "2019.01.05", 200);
+        financeManager.setCategoryAndAddPurchase(purchaseBun1);
+        financeManager.setCategoryAndAddPurchase(purchaseBun2);
+        financeManager.setCategoryAndAddPurchase(purchaseBun3);
+        List<Purchase> actualPurchaseList = financeManager.getPurchasesForCurrentMonth();
+        List<Purchase> expectedPurchaseList = Arrays.asList(purchaseBun1);
+        assertThat("Содержимое списков разное", expectedPurchaseList, is(actualPurchaseList));
+    }
+
+    @Test
+    public void shouldGetPurchasesForCurrentYear() {
+        Purchase purchaseBun1 = new Purchase("булка", currentDateStr, 200);
+        Purchase purchaseBun2 = new Purchase("булка", "2022.02.08", 200);
+        Purchase purchaseBun3 = new Purchase("булка", "2019.01.05", 200);
+        financeManager.setCategoryAndAddPurchase(purchaseBun1);
+        financeManager.setCategoryAndAddPurchase(purchaseBun2);
+        financeManager.setCategoryAndAddPurchase(purchaseBun3);
+        List<Purchase> actualPurchaseList = financeManager.getPurchasesForCurrentYear();
+        List<Purchase> expectedPurchaseList = Arrays.asList(purchaseBun1);
+        assertThat("Содержимое списков разное", expectedPurchaseList, is(actualPurchaseList));
     }
 }

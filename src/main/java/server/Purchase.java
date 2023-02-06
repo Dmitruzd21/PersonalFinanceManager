@@ -38,6 +38,13 @@ public class Purchase implements Serializable { // много обьектов �
         return this.parsedDate.getDayOfMonth();
     }
 
+    public static Purchase createFromJSON(String jsonText) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        Purchase purchase = gson.fromJson(jsonText, Purchase.class);
+        return purchase;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -52,13 +59,6 @@ public class Purchase implements Serializable { // много обьектов �
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public static Purchase createFromJSON(String jsonText) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        Purchase purchase = gson.fromJson(jsonText, Purchase.class);
-        return purchase;
     }
 
     @Override
