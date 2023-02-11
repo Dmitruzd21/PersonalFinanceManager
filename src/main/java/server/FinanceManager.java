@@ -59,8 +59,7 @@ public class FinanceManager { // один объект
     }
 
     public FinanceManager calculateEachCategorySum(List<Purchase> purchasesList, List<Category> categories) { // предвариетльно покупке должна быть присвоена категория
-        categories.stream().forEach(
-                categoryItem -> {
+        categories.forEach(categoryItem -> {
                     int categorySum = 0;
                     for (Purchase purchase : purchasesList) {
                         if (purchase.getCategory().equals(categoryItem.getCategoryName())) {
