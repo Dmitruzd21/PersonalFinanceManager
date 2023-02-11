@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinanceManager { // один объект
-    private ProductsAndCategoriesMapStorage mapStorage = new ProductsAndCategoriesMapStorage();
+    private ProductsMapStorage mapStorage = new ProductsMapStorage();
 
     private List<Category> categoryList = mapStorage.createUniqueCategories();
     private List<Category> categoryListForYear = mapStorage.createUniqueCategories();

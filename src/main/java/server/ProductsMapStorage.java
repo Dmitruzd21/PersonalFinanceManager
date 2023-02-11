@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProductsAndCategoriesMapStorage { // один обьект, должен быть готов перед приемом покупок
+public class ProductsMapStorage { // один объект, должен быть готов перед приемом покупок
     private Map<String, String> productsAndCategory;
     private TsvMapConverter tsvMapConverter = new TsvMapConverter();
     private String tsvFile = "categories.tsv";
     private String otherCategory = "другое";
 
-    public ProductsAndCategoriesMapStorage() {
+    public ProductsMapStorage() {
         this.productsAndCategory = tsvToMap();
     }
 
